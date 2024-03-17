@@ -26,5 +26,3 @@
      ((> e (string-length str)) '())
      ((or (= e (string-length str)) (char=? (string-ref str e) d)) (cons (substring str s e) (loop e (+ e 1))))
      (#t (loop s (+ e 1))))))
-
-(display (length (split-string "test best rest" #\space)))
