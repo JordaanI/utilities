@@ -22,4 +22,5 @@
    split-string)
 
   (import
-   (.. utilities/string)))
+   ; String Utilities
+   (.. string)))

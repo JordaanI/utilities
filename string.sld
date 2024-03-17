@@ -1,4 +1,4 @@
-(define-library (utilities string)
+(define-library (string)
 		(export
 			split-string)
 
