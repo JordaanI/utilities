@@ -17,7 +17,6 @@
 ;;
 
 (define-library (github.com/JordaanI/utilities utilitites)
-  (##namespace ("utilities"))
 
   (export
    ; String Utilities
