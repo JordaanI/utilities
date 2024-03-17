@@ -22,4 +22,4 @@
    split-string)
 
   (import
-   (utilities string)))
+   (.. utilities/string)))
