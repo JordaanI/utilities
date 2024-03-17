@@ -16,7 +16,7 @@
 ;; Project: Utilities main file 
 ;;
 
-(define-library (github.com/JordaanI/utilities utilitites)
+(define-library (utilitites)
 
   (export
    ; String Utilities
