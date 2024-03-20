@@ -28,4 +28,5 @@
   (import
    ; String Utilities
    (.. string)
-   (... list)))
+   ; List Utilities
+   (.. list)))
