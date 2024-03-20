@@ -20,10 +20,10 @@
 
   (export
    ; String Utilities
-   split-string)
+   split-string
 
   ; List Utilities
-  flatten
+  flatten)
   
   (import
    ; String Utilities
