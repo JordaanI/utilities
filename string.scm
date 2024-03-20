@@ -26,3 +26,11 @@
      ((> e (string-length str)) '())
      ((or (= e (string-length str)) (char=? (string-ref str e) d)) (cons (substring str s e) (loop (+ e 1) (+ e 1))))
      (#t (loop s (+ e 1))))))
+
+;;;
+;;;; String Contain
+;;;
+
+(define (string-contain? s c)
+  (member c (string->list s)))
+

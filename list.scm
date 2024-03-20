@@ -13,19 +13,17 @@
 ;; Author: Ivan Jordaan
 ;; Date: 2024-03-17
 ;; email: ivan@axoinvent.com
-;; Project: Utilities main file 
+;; Project: List Utility 
 ;;
 
-(define-library (github.com/JordaanI/utilities utilitites)
+;;;
+;;;; Flatten
+;;;
 
-  (export
-   ; String Utilities
-   split-string)
+(define (flatten l)
+  (let loop ((l l) (r '()))
+    (cond
+     ((null? l) r)
+     ((list? (car l)) (append (loop (car l) r) (loop (cdr l) r)))
+     (#t (cons (car l) (loop (cdr l) r))))))
 
-  ; List Utilities
-  flatten
-  
-  (import
-   ; String Utilities
-   (.. string)
-   (... list)))
