@@ -26,7 +26,7 @@
    flatten
 
    ; Json Utilities
-   table->json-list)
+   table->json-string)
   
   (import
    ; String Utilities
