@@ -1,6 +1,6 @@
 (define-library (json)
   (export
-    table->json-list)
+    table->json-string)
   (import
     (gambit))
   (begin
