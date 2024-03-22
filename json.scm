@@ -82,7 +82,7 @@
     (split-string (substring scs s e) #\:))
 
   (define (set-in t key-val)
-    (table-set! t (parse-string-number (car key-val)) (parse-value (cdr key-val))))
+    (table-set! t (parse-string-number (car key-val)) (parse-value (cadr key-val))))
   
   (if (is-json-string? js)
       (let ((scs (strip-char (substring js 1 (- (string-length js) 1)) #\space))
