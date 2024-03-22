@@ -21,6 +21,9 @@
   (export
    ; String Utilities
    split-string
+   string-contain
+   strip-char
+   substring
 
    ; List Utilities
    flatten

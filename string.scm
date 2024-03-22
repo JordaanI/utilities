@@ -34,3 +34,26 @@
 (define (string-contain? s c)
   (member c (string->list s)))
 
+;;;
+;;;; substring
+;;;
+
+(define (substring s b e)
+  (list->tring
+   (let loop ((cl (list-tail (string->list s) b))
+	      (d (- e b)))
+     (if (zero? d) '()
+	 (cons (car cl) (loop (cdr cl) (- d 1)))))))
+
+;;;
+;;;; Strip Space
+;;;
+
+(define (strip-char s c)
+  (list->string
+   (let loop ((cl (string->list s)))
+     (cond
+      ((null? cl) '())
+      ((char=? (car cl) c) (loop (cdr cl) c))
+      (#t (cons (car cl) (loop (cdr cl) c)))))))
+  

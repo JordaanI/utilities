@@ -1,6 +1,9 @@
 (define-library (string)
 		(export
-			split-string)
+			split-string
+			string-contain?
+			substring
+			strip-char)
 
 		(import
 			(gambit))

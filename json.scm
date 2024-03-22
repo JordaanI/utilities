@@ -32,6 +32,7 @@
 					 (string-append (parse-value (car v)) ", " (loop (cdr v))))) "]"))
      ((table? v) (table->json-string v))
      (#t (raise 'value-not-encodable))))
+  
   (string-append "{"
 		 (let loop ((l (table->list t)))
 		   (let* ((entry (car l))
@@ -41,4 +42,38 @@
 		     (if (= (length l) 1) (string-append key value "}")
 			 (string-append key value ", " (loop (cdr l))))))))
 
+;;;
+;;;; Is Json string
+;;;
 
+(define (is-json-string? string)
+  (let ((cl (string->list string)))
+    (and (char=? (car cl) #\{) (char=? (car (reverse cl)) #\}))))
+
+;;;
+;;;; json-string->table
+;;;
+
+(define (json-string->table js)
+
+  (define (parse-value val)
+    #t)
+  
+  (if (is-json-string? js)
+      (let ((key-val-pairs (split-string (strip-char (substring js 1 (- (string-length js) 1)) #\space) #\,))
+	    (t (make-table)))
+	(for-each (lambda (pair)
+		    (table-set! t (car pair) (cdr pair)))
+		  (split-string key-val-pairs #\:))
+	t)
+      #f))
+
+;;;
+;;;; Tests
+;;;
+
+(define t (list->table `(("1" . 2) ("2" . (1 (1 2) 2)) ("3" . "three"))))
+(table-set! t "4" (table-copy t))
+(define js (table->json-string t))
+(println "json-string -> " js)
+(println "current encoding -> " (table->list (json-string->table js)))
