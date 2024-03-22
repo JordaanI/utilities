@@ -19,17 +19,22 @@
 (define-library (github.com/JordaanI/utilities utilitites)
 
   (export
-   ; String Utilities
+					; String Utilities
    split-string
    string-contain
    strip-char
    substring
 
-   ; List Utilities
+					; List Utilities
    flatten
 
-   ; Json Utilities
-   table->json-string)
+					; Json Utilities
+   table->json-string
+   json-string->table
+
+					;testing Vars
+   t
+   js)
   
   (import
    ; String Utilities
