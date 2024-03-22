@@ -70,13 +70,16 @@
 
 (define (json-string->table js)
 
-  (define (parse-string-number key)
-    (let* ((c (list->string
-	       (let loop ((cl (string->list key)))
-		 (cond
-		  ((null? cl) '())
-		  ((not (or (char=? (car cl) #\\) (char=? (car cl) #\"))) (cons (car cl) (loop (cdr cl))))
-		  (#t (loop (cdr cl)))))))
+  (define (parse-string s)
+    (list->string
+     (let loop ((cl (string->list s)))
+       (cond
+	((null? cl) '())
+	((not (or (char=? (car cl) #\\) (char=? (car cl) #\"))) (cons (car cl) (loop (cdr cl))))
+	(#t (loop (cdr cl)))))))
+  
+  (define (parse-string-number s)
+    (let* ((c (parse-string s))
 	   (number (string->number c)))
       (if number number c)))
   
@@ -96,7 +99,7 @@
     (split-string (substring scs s e) #\:))
 
   (define (set-in t key-val)
-    (table-set! t (parse-string-number (car key-val)) (parse-value (cadr key-val))))
+    (table-set! t (parse-string (car key-val)) (parse-value (cadr key-val))))
   
   (if (is-json-string? js)
       (let ((scs (strip-char (substring js 1 (- (string-length js) 1)) #\space))
