@@ -62,7 +62,7 @@
   (if (is-json-string? js)
       (let ((scs (sunstring (substring js 1 (- (string-length js) 1)) #\space))
 	    (t (make-table)))
-	(let loop ((cl (string->list scs)) (in-array? #f) (s-index 0) (e-index))
+	(let loop ((cl (string->list scs)) (in-array? #f) (s-index 0) (e-index 0))
 	  (cond
 	   ((null? cl) t)
 	   ((and (not in-array) (char=? (car cl) #\,))
