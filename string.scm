@@ -39,7 +39,7 @@
 ;;;
 
 (define (substring s b e)
-  (list->tring
+  (list->string
    (let loop ((cl (list-tail (string->list s) b))
 	      (d (- e b)))
      (if (zero? d) '()
