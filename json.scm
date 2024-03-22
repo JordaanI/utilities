@@ -64,7 +64,8 @@
 	    (t (make-table)))
 	(for-each (lambda (pair)
 		    (table-set! t (car pair) (cdr pair)))
-		  (split-string key-val-pairs #\:))
+		  (map (lambda (pair)
+			 (split-string pair #\:)) key-val-pairs))
 	t)
       #f))
 
