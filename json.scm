@@ -58,7 +58,7 @@
 
   (define (parse-key key)
     (list->string
-     (let ((cl (string->list key)))
+     (let loop ((cl (string->list key)))
        (cond
 	((null? cl) '())
 	((not (or (char=? (car cl) #\\) (char=? (car cl) #\"))) (cons (car cl) (loop (cdr cl))))
