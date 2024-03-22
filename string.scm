@@ -54,6 +54,6 @@
    (let loop ((cl (string->list s)))
      (cond
       ((null? cl) '())
-      ((char=? (car cl) c) (loop (cdr cl) c))
-      (#t (cons (car cl) (loop (cdr cl) c)))))))
+      ((char=? (car cl) c) (loop (cdr cl)))
+      (#t (cons (car cl) (loop (cdr cl))))))))
   
