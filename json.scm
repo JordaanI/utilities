@@ -79,7 +79,7 @@
      (#t (parse-string-number val))))
 
   (define (get-key-val scs s e)
-    (split-string (substring scs s-index e-index) #\:))
+    (split-string (substring scs s e) #\:))
 
   (define (set-in t key-val)
     (table-set! t (parse-string-number (car key-val)) (parse-value (cdr key-val))))
