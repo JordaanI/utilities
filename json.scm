@@ -76,4 +76,4 @@
 (table-set! t "4" (table-copy t))
 (define js (table->json-string t))
 (println "json-string -> " js)
-(println "current encoding -> " (table->list (json-string->table js)))
+;(println "current encoding -> " (table->list (json-string->table js)))

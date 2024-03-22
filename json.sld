@@ -5,6 +5,6 @@
     json-string->table)
   (import
     (gambit)
-    (github.com/JordaanI/utilities utilities))
+    (.. string))
   (begin
     (include "json.scm")))
