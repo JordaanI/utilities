@@ -64,7 +64,9 @@
 	    (t (make-table)))
 	(let loop ((cl (string->list scs)) (in-array? #f) (s-index 0) (e-index 0))
 	  (cond
-	   ((null? cl) t)
+	   ((null? cl)
+	    (let ((key-val (split-string (substring scs s-index e-index) #\:)))
+	      (and (table-set! t) t (car key-val) (cdr key-val))))
 	   ((and (not in-array?) (char=? (car cl) #\,))
 	    (let ((key-val (split-string (substring scs s-index e-index) #\:)) (new-index (+ e-index 1)))
 	      (table-set! t (car key-val) (cdr key-val))
