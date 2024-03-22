@@ -16,6 +16,8 @@
 ;; Project: json Utilities
 ;;
 
+(import (string))
+
 ;;;
 ;;;; Table to Json String
 ;;;
@@ -60,13 +62,13 @@
     #t)
   
   (if (is-json-string? js)
-      (let ((scs (strip-string (substring js 1 (- (string-length js) 1)) #\space))
+      (let ((scs (strip-char (substring js 1 (- (string-length js) 1)) #\space))
 	    (t (make-table)))
 	(let loop ((cl (string->list scs)) (in-array? #f) (s-index 0) (e-index 0))
 	  (cond
 	   ((null? cl) t)
 	   ((and (not in-array) (char=? (car cl) #\,))
-	    (let ((key-val (strip-string (substring scs s-index e-index) #\:)) (new-index (+ e-index 1)))
+	    (let ((key-val (split-string (substring scs s-index e-index) #\:)) (new-index (+ e-index 1)))
 	      (table-set! t (car key-val) (cdr key-val))
 	      (loop (cdr cl) in-array? new-index new-index)))
 	   ((or (char=? (car cl) #\]) (char=? (car cl) #\[)) (loop (cdr cl) (not in-array?) s-index (+ e-index 1)))
