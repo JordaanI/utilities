@@ -43,12 +43,26 @@
 			 (string-append key value ", " (loop (cdr l))))))))
 
 ;;;
+;;;; Compare first and last string
+;;;
+
+(define (compare-head-tail s h t)
+  (let ((cl (string->list s)))
+    (and (char=? (car cl) h) (char=? (car (reverse cl)) t))))
+
+;;;
 ;;;; Is Json string
 ;;;
 
-(define (is-json-string? string)
-  (let ((cl (string->list string)))
-    (and (char=? (car cl) #\{) (char=? (car (reverse cl)) #\}))))
+(define (is-json-string? s)
+  (compare-head-tail s #\{ #\}))
+
+;;;
+;;;; is Json List
+;;;
+
+(define (is-json-list? s)
+  (compare-head-tail s #\[ #\]))
 
 ;;;
 ;;;; json-string->table
