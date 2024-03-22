@@ -56,6 +56,14 @@
 
 (define (json-string->table js)
 
+  (define (parse-key key)
+    (list->string
+     (let ((cl (string->list key)))
+       (cond
+	((null? cl) '())
+	((not (or (char=? (car cl) #\\) (char=? (car cl) #\"))) (cons (car cl) (loop (cdr cl))))
+	(#t (loop (cdr cl)))))))
+  
   (define (parse-value val)
     #t)
   
@@ -66,10 +74,10 @@
 	  (cond
 	   ((null? cl)
 	    (let ((key-val (split-string (substring scs s-index e-index) #\:)))
-	      (and (table-set! t (car key-val) (cdr key-val)) t)))
+	      (and (table-set! t (parse-key (car key-val)) (cdr key-val)) t)))
 	   ((and (not in-array?) (char=? (car cl) #\,))
 	    (let ((key-val (split-string (substring scs s-index e-index) #\:)) (new-index (+ e-index 1)))
-	      (table-set! t (car key-val) (cdr key-val))
+	      (table-set! t (parse-key (car key-val)) (cdr key-val))
 	      (loop (cdr cl) in-array? new-index new-index)))
 	   ((or (char=? (car cl) #\]) (char=? (car cl) #\[)) (loop (cdr cl) (not in-array?) s-index (+ e-index 1)))
 	   (#t (loop (cdr cl) in-array? s-index (+ e-index 1))))))
