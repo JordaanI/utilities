@@ -56,16 +56,33 @@
 
 (define (json-string->table js)
 
-  (define (parse-key key)
-    (list->string
-     (let loop ((cl (string->list key)))
-       (cond
-	((null? cl) '())
-	((not (or (char=? (car cl) #\\) (char=? (car cl) #\"))) (cons (car cl) (loop (cdr cl))))
-	(#t (loop (cdr cl)))))))
+  (define (parse-string-number key)
+    (let* ((c (list->string
+	       (let loop ((cl (string->list key)))
+		 (cond
+		  ((null? cl) '())
+		  ((not (or (char=? (car cl) #\\) (char=? (car cl) #\"))) (cons (car cl) (loop (cdr cl))))
+		  (#t (loop (cdr cl)))))))
+	   (number (string->number c)))
+      (if number number c)))
+  
+  (define (parse-list s)
+    (let ((sl (split-string (substring s 1 (- (string-length s) 1)) #\,)))
+      (map parse-value sl)))
   
   (define (parse-value val)
-    #t)
+    (cond
+     ((is-json-string? val) (json-string->table val))
+     ((is-json-list? val) (parse-list val))
+     ((string=? val "true") #t)
+     ((string=? val "false") #f)
+     (#t (parse-string-number val))))
+
+  (define (get-key-val scs s e)
+    (split-string (substring scs s-index e-index) #\:))
+
+  (define (set-in t key-val)
+    (table-set! t (parse-string-number (car key-val)) (parse-value (cdr key-val))))
   
   (if (is-json-string? js)
       (let ((scs (strip-char (substring js 1 (- (string-length js) 1)) #\space))
@@ -73,11 +90,12 @@
 	(let loop ((cl (string->list scs)) (in-array? #f) (s-index 0) (e-index 0))
 	  (cond
 	   ((null? cl)
-	    (let ((key-val (split-string (substring scs s-index e-index) #\:)))
-	      (and (table-set! t (parse-key (car key-val)) (cdr key-val)) t)))
+	    (let ((key-val (get-key-val scs s-index e-index)))
+	      (set-in t key-val)
+	      t))
 	   ((and (not in-array?) (char=? (car cl) #\,))
-	    (let ((key-val (split-string (substring scs s-index e-index) #\:)) (new-index (+ e-index 1)))
-	      (table-set! t (parse-key (car key-val)) (cdr key-val))
+	    (let ((key-val (get-key-val scs s-index e-index)) (new-index (+ e-index 1)))
+	      (set-in t key-val)
 	      (loop (cdr cl) in-array? new-index new-index)))
 	   ((or (char=? (car cl) #\]) (char=? (car cl) #\[)) (loop (cdr cl) (not in-array?) s-index (+ e-index 1)))
 	   (#t (loop (cdr cl) in-array? s-index (+ e-index 1))))))
