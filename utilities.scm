@@ -27,6 +27,7 @@
 
 					; List Utilities
    flatten
+   pairize
 
 					; Json Utilities
    table->json-string

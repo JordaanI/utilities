@@ -117,13 +117,3 @@
 	   ((or (char=? (car cl) #\]) (char=? (car cl) #\[)) (loop (cdr cl) (not in-array?) s-index (+ e-index 1)))
 	   (#t (loop (cdr cl) in-array? s-index (+ e-index 1))))))
       #f))
-
-;;;
-;;;; Tests
-;;;
-
-(define t (list->table `(("1" . 2) ("2" . (1 (1 2) 2)) ("3" . "three"))))
-(table-set! t "4" (table-copy t))
-(define js (table->json-string t))
-(println "json-string -> " js)
-;(println "current encoding -> " (table->list (json-string->table js)))

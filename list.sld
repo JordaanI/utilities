@@ -1,6 +1,7 @@
 (define-library (list)
 		(export
-			flatten)
+			flatten
+			pairize)
 		(import
 			(gambit))
 		(begin

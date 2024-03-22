@@ -27,3 +27,10 @@
      ((list? (car l)) (append (loop (car l) r) (loop (cdr l) r)))
      (#t (cons (car l) (loop (cdr l) r))))))
 
+;;;
+;;;; Pairize
+;;;
+
+(define (pairize l)
+      (if (null? l) '()
+       (cons (cons (car l) (cadr l)) (pairize (list-tail l 2)))))
