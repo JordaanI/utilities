@@ -4,6 +4,7 @@
     is-json-string?
     json-string->table)
   (import
-    (gambit))
+    (gambit)
+    (string))
   (begin
     (include "json.scm")))
