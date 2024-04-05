@@ -28,6 +28,8 @@
 					; List Utilities
    flatten
    pairize
+   collect
+   sort
 
 					; Json Utilities
    table->json-string

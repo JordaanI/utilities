@@ -34,3 +34,23 @@
 (define (pairize l)
       (if (null? l) '()
        (cons (cons (car l) (cadr l)) (pairize (list-tail l 2)))))
+
+;;;
+;;;; Collect less than
+;;;
+
+(define (collect p v l)
+  (cond
+   ((null? l) '())
+   ((p v (car l)) (cons (car l) (collect p v (cdr l))))
+   (#t (collect p v (cdr l)))))
+
+;;;
+;;;; Sort List
+;;;
+
+(define (sort l)
+  (if (null? l) '()
+      (let ((v (list-ref l (random-integer (length l)))))
+	(append (sort (collect > v l)) (list v) (sort (collect < v l))))))
+
